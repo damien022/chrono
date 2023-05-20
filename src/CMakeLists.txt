@@ -96,7 +96,7 @@ endif()
 
 message(STATUS "Searching for Threads...")
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
-find_package(Threads)
+find_package(Threads REQUIRED)
 
 message(STATUS "  Thread library:      ${CMAKE_THREAD_LIBS_INIT}")
 message(STATUS "  Using Win32 threads? ${CMAKE_USE_WIN32_THREADS_INIT}")
@@ -112,7 +112,7 @@ set(CH_C_FLAGS "${CH_C_FLAGS} ${CMAKE_THREAD_LIBS_INIT}")
 # main ChronoEngine library, regardless on whether or not OpenMP is found.
 
 message(STATUS "Searching for OpenMP...")
-find_package(OpenMP)
+find_package(OpenMP REQUIRED)
 
 # Determine OpenMP version. Prepare substitution variables that can be used in
 # generating configuration header files.
@@ -177,7 +177,7 @@ if(USE_SIMD)
 	
    # Figure out SIMD support
    message(STATUS "Testing SIMD capabilities...")
-   find_package(SIMD)
+   find_package(SIMD REQUIRED)
    
    # Set substitution variables for configuration file
    if(SIMD_SSE)
@@ -250,11 +250,12 @@ endif()
 #-----------------------------------------------------------------------------
 
 message(STATUS "Searching for Eigen3...")
-find_package(Eigen3 3.3.0)
+find_package(Eigen3 3.3.0 CONFIG REQUIRED)
 if(EIGEN3_FOUND)
   message(STATUS "  Eigen3 version: ${EIGEN3_VERSION}")
   message(STATUS "  Eigen3 include directory: ${EIGEN3_INCLUDE_DIR}")
 else()
+  message(FATAL_ERROR " Needs Eigen")
   mark_as_advanced(CLEAR EIGEN3_INCLUDE_DIR)
   mark_as_advanced(FORCE Eigen3_DIR)
   message(FATAL_ERROR "  Eigen3 not found. Specify EIGEN3_INCLUDE_DIR")

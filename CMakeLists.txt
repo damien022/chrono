@@ -70,12 +70,7 @@ message(STATUS "The target processor is ${CMAKE_SYSTEM_PROCESSOR}")
 #-----------------------------------------------------------------------------
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/")
-include(GetGitRevisionDescription)
-get_git_head_revision(GIT_REFSPEC VCS_REVISION)
-
-if("${VCS_REVISION}" MATCHES ".*-NOTFOUND$")
-    set(VCS_REVISION "")
-endif()
+set(VCS_REVISION "")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
